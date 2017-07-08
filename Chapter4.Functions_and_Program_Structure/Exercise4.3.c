@@ -110,22 +110,21 @@ int getop(char s[])
 {
 	int i, c;
 	i = 0;
-	while((s[i] = c = getch()) == ' ' || c == '\t')
+	while((s[i] = c = getch()) == ' ' || c == '\t')			/* skip spaces/tabs */
     ;
 	
-	if(c == '-' && isdigit(s[++i] = c = getch()))
+	if(!isdigit(c) && c != '.' && c != '-')					/* retrun c if c letter expect '-' or '.' */
 	{
-		;
+		return c;
 	}
-	else if(!isdigit(c) && c != '.') 
-  	{
-		s[++i] = '\0';
-		if(i > 1 && (c == ' ' || c == '\t' || c == '\n'))		//
+	
+	if(c == '-')
+	{
+		if(!isdigit(s[++i] = c = getch()) && c != '.')		/* if not digit or '.' after '-' */
 		{
 			ungetch(c);
-			return s[0];
+			return '-';
 		}
-		return c; /* not a number */	
 	}
 	
   	if(isdigit(c)) /* collect integer part */
